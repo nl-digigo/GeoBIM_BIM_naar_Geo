@@ -1,5 +1,6 @@
-# Beheerd vanuit Geonovum/NL-ReSpec-workflows. Pas dit bestand niet aan in een documentrepo:
-# de build- en publicatiestappen staan centraal en worden via @v1 gebruikt.
+# Gebaseerd op Geonovum/NL-ReSpec-workflows (build via @v1).
+# Aangepast voor nl-digigo: de publish-job naar docs.geostandaarden.nl is verwijderd.
+# Let op bij merges vanuit Geonovum: zorg dat de publish-job niet terugkomt.
 name: Main Workflow
 on:
   push:
@@ -19,13 +20,5 @@ jobs:
       contents: write
     uses: Geonovum/NL-ReSpec-workflows/.github/workflows/build.yml@v1
 
-  publish:
-    if: github.event_name == 'release'
-    needs: build
-    permissions:
-      contents: write
-      pull-requests: write
-    uses: Geonovum/NL-ReSpec-workflows/.github/workflows/publish.yml@v1
-    secrets:
-      GH_APP_ID: ${{ secrets.GH_APP_ID }}
-      GH_APP_PRIVATE_KEY: ${{ secrets.GH_APP_PRIVATE_KEY }}
+  # Geen publish-job: de centrale publish-workflow publiceert alleen naar
+  # docs.geostandaarden.nl (Geonovum). Dit document wordt via DigiGO gepubliceerd.
